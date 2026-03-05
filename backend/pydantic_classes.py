@@ -9,16 +9,16 @@ from pydantic import BaseModel, field_validator
 ############################################
 
 class Genre(Enum):
-    Philosophy = "Philosophy"
     Cookbooks = "Cookbooks"
+    Romance = "Romance"
+    Horror = "Horror"
     Adventure = "Adventure"
     Thriller = "Thriller"
-    Romance = "Romance"
-    Technology = "Technology"
     Fantasy = "Fantasy"
-    Poetry = "Poetry"
-    Horror = "Horror"
+    Technology = "Technology"
+    Philosophy = "Philosophy"
     History = "History"
+    Poetry = "Poetry"
 
 ############################################
 # Classes are defined here
@@ -30,22 +30,22 @@ class AuthorCreate(BaseModel):
 
 
 class LibraryCreate(BaseModel):
-    web_page: str
     address: str
     name: str
+    web_page: str
     telephone: str
     books: List[int]  # N:M Relationship
 
 
 class BookCreate(BaseModel):
-    price: float
     stock: int
-    release: date
+    price: float
     pages: int
-    title: str
     genre: Genre
-    authors: List[int]  # N:M Relationship
+    title: str
+    release: date
     library: List[int]  # N:M Relationship
+    authors: List[int]  # N:M Relationship
 
     @field_validator('pages')
     @classmethod
