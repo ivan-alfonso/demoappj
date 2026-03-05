@@ -9,41 +9,41 @@ from pydantic import BaseModel, field_validator
 ############################################
 
 class Genre(Enum):
+    Thriller = "Thriller"
+    History = "History"
     Cookbooks = "Cookbooks"
     Romance = "Romance"
     Horror = "Horror"
-    Adventure = "Adventure"
-    Thriller = "Thriller"
-    Fantasy = "Fantasy"
     Technology = "Technology"
     Philosophy = "Philosophy"
-    History = "History"
+    Fantasy = "Fantasy"
     Poetry = "Poetry"
+    Adventure = "Adventure"
 
 ############################################
 # Classes are defined here
 ############################################
 class AuthorCreate(BaseModel):
-    name: str
     birth: date
+    name: str
     books: List[int]  # N:M Relationship
 
 
 class LibraryCreate(BaseModel):
     address: str
-    name: str
     web_page: str
+    name: str
     telephone: str
     books: List[int]  # N:M Relationship
 
 
 class BookCreate(BaseModel):
-    stock: int
-    price: float
     pages: int
-    genre: Genre
     title: str
+    genre: Genre
+    stock: int
     release: date
+    price: float
     library: List[int]  # N:M Relationship
     authors: List[int]  # N:M Relationship
 

@@ -1,7 +1,7 @@
 services:
   # Backend API (Free tier - 750 hours/month, spins down after 15 min idle)
   - type: web
-    name: demoappj-backend-4a17de
+    name: demoappj-backend-894296
     runtime: python
     plan: free
     buildCommand: pip install -r backend/requirements.txt
@@ -14,13 +14,13 @@ services:
 
   # Frontend (Free static site)
   - type: web
-    name: demoappj-frontend-4a17de
+    name: demoappj-frontend-894296
     runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/build
     envVars:
       - key: VITE_API_URL
-        value: https://demoappj-backend-4a17de.onrender.com
+        value: https://demoappj-backend-894296.onrender.com
     headers:
       - path: /assets/*.js
         name: Content-Type
@@ -35,7 +35,7 @@ services:
 
   # Agent Service (Free tier - WebSocket-based AI agent)
   - type: web
-    name: demoappj-agent-4a17de
+    name: demoappj-agent-894296
     runtime: python
     plan: free
     buildCommand: pip install torch==2.6.0+cpu scikit-learn==1.6.1 besser-agentic-framework[llms]==4.2.3 --extra-index-url https://download.pytorch.org/whl/cpu && python -c "import nltk; nltk.download('punkt', quiet=True); nltk.download('punkt_tab', quiet=True)"

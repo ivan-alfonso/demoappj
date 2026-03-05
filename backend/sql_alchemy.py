@@ -14,16 +14,16 @@ class Base(DeclarativeBase):
 
 # Definitions of Enumerations
 class Genre(enum.Enum):
+    Thriller = "Thriller"
+    History = "History"
     Cookbooks = "Cookbooks"
     Romance = "Romance"
     Horror = "Horror"
-    Adventure = "Adventure"
-    Thriller = "Thriller"
-    Fantasy = "Fantasy"
     Technology = "Technology"
     Philosophy = "Philosophy"
-    History = "History"
+    Fantasy = "Fantasy"
     Poetry = "Poetry"
+    Adventure = "Adventure"
 
 
 # Tables definition for many-to-many relationships
@@ -73,8 +73,8 @@ Author.books: Mapped[List["Book"]] = relationship("Book", secondary=books_1, bac
 Library.books: Mapped[List["Book"]] = relationship("Book", secondary=books, back_populates="library")
 
 #--- Relationships of the book table
-Book.library: Mapped[List["Library"]] = relationship("Library", secondary=books, back_populates="books")
 Book.authors: Mapped[List["Author"]] = relationship("Author", secondary=books_1, back_populates="books")
+Book.library: Mapped[List["Library"]] = relationship("Library", secondary=books, back_populates="books")
 
 # Database connection
 DATABASE_URL = "sqlite:///Class_Diagram.db"  # SQLite connection

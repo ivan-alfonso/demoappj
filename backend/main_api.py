@@ -379,7 +379,7 @@ async def create_author(author_data: AuthorCreate, database: Session = Depends(g
                 raise HTTPException(status_code=404, detail=f"Book with ID {id} not found")
 
     db_author = Author(
-        name=author_data.name,        birth=author_data.birth        )
+        birth=author_data.birth,        name=author_data.name        )
 
     database.add(db_author)
     database.commit()
@@ -415,7 +415,7 @@ async def bulk_create_author(items: list[AuthorCreate], database: Session = Depe
             # Basic validation for each item
 
             db_author = Author(
-                name=item_data.name,                birth=item_data.birth            )
+                birth=item_data.birth,                name=item_data.name            )
             database.add(db_author)
             database.flush()  # Get ID without committing
             created_items.append(db_author.id)
@@ -462,8 +462,8 @@ async def update_author(author_id: int, author_data: AuthorCreate, database: Ses
     if db_author is None:
         raise HTTPException(status_code=404, detail="Author not found")
 
-    setattr(db_author, 'name', author_data.name)
     setattr(db_author, 'birth', author_data.birth)
+    setattr(db_author, 'name', author_data.name)
     existing_book_ids = [assoc.books for assoc in database.execute(
         books_1.select().where(books_1.c.authors == db_author.id))]
 
@@ -690,7 +690,7 @@ async def create_library(library_data: LibraryCreate, database: Session = Depend
                 raise HTTPException(status_code=404, detail=f"Book with ID {id} not found")
 
     db_library = Library(
-        address=library_data.address,        name=library_data.name,        web_page=library_data.web_page,        telephone=library_data.telephone        )
+        address=library_data.address,        web_page=library_data.web_page,        name=library_data.name,        telephone=library_data.telephone        )
 
     database.add(db_library)
     database.commit()
@@ -726,7 +726,7 @@ async def bulk_create_library(items: list[LibraryCreate], database: Session = De
             # Basic validation for each item
 
             db_library = Library(
-                address=item_data.address,                name=item_data.name,                web_page=item_data.web_page,                telephone=item_data.telephone            )
+                address=item_data.address,                web_page=item_data.web_page,                name=item_data.name,                telephone=item_data.telephone            )
             database.add(db_library)
             database.flush()  # Get ID without committing
             created_items.append(db_library.id)
@@ -774,8 +774,8 @@ async def update_library(library_id: int, library_data: LibraryCreate, database:
         raise HTTPException(status_code=404, detail="Library not found")
 
     setattr(db_library, 'address', library_data.address)
-    setattr(db_library, 'name', library_data.name)
     setattr(db_library, 'web_page', library_data.web_page)
+    setattr(db_library, 'name', library_data.name)
     setattr(db_library, 'telephone', library_data.telephone)
     existing_book_ids = [assoc.books for assoc in database.execute(
         books.select().where(books.c.library == db_library.id))]
@@ -1023,7 +1023,7 @@ async def create_book(book_data: BookCreate, database: Session = Depends(get_db)
                 raise HTTPException(status_code=404, detail=f"Author with ID {id} not found")
 
     db_book = Book(
-        stock=book_data.stock,        price=book_data.price,        pages=book_data.pages,        genre=book_data.genre.value,        title=book_data.title,        release=book_data.release        )
+        pages=book_data.pages,        title=book_data.title,        genre=book_data.genre.value,        stock=book_data.stock,        release=book_data.release,        price=book_data.price        )
 
     database.add(db_book)
     database.commit()
@@ -1069,7 +1069,7 @@ async def bulk_create_book(items: list[BookCreate], database: Session = Depends(
             # Basic validation for each item
 
             db_book = Book(
-                stock=item_data.stock,                price=item_data.price,                pages=item_data.pages,                genre=item_data.genre.value,                title=item_data.title,                release=item_data.release            )
+                pages=item_data.pages,                title=item_data.title,                genre=item_data.genre.value,                stock=item_data.stock,                release=item_data.release,                price=item_data.price            )
             database.add(db_book)
             database.flush()  # Get ID without committing
             created_items.append(db_book.id)
@@ -1116,12 +1116,12 @@ async def update_book(book_id: int, book_data: BookCreate, database: Session = D
     if db_book is None:
         raise HTTPException(status_code=404, detail="Book not found")
 
-    setattr(db_book, 'stock', book_data.stock)
-    setattr(db_book, 'price', book_data.price)
     setattr(db_book, 'pages', book_data.pages)
-    setattr(db_book, 'genre', book_data.genre.value)
     setattr(db_book, 'title', book_data.title)
+    setattr(db_book, 'genre', book_data.genre.value)
+    setattr(db_book, 'stock', book_data.stock)
     setattr(db_book, 'release', book_data.release)
+    setattr(db_book, 'price', book_data.price)
     existing_library_ids = [assoc.library for assoc in database.execute(
         books.select().where(books.c.books == db_book.id))]
 
